@@ -1,0 +1,23 @@
+body {
+  font-family: Calibri, Verdana, sans-serif;
+  width: 900px;
+  margin: 0.5em auto;
+}
+
+div.details {
+  width: 300px;
+  display: inline;
+}
+
+img.pic {
+  float: left;
+  padding-right: 2em;
+}
+
+div#who {
+  font-size: small;
+}
+
+div#who input {
+  border: solid 1px;
+}
