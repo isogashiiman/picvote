@@ -1,0 +1,3 @@
+[submodule "exifr"]
+	path = exifr
+	url = git://github.com/remvee/exifr.git
