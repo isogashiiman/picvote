@@ -81,6 +81,14 @@ get /\/(.*\.jpg)\/vote$/i do |name|
   redirect "/#{pic.next.name}"
 end
 
+get /\/(.*\.jpg)\/unvote$/i do |name|
+  return 'Please introduce yourself before voting.' unless session[:username]
+  pic = Pic.first(:name => name) or return 'Nie ma takiego obrazka'
+  user = User.first_or_create(:login => session[:username])
+  Vote.first(:user => user, :pic => pic).destroy!
+  redirect "/#{pic.next.name}"
+end
+
 def fill_db_with_pics
   require 'exifr'
   pics = Dir.glob('pics/*.{jpg,JPG}')
