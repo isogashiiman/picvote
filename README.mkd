@@ -1,0 +1,46 @@
+Picvote
+=======
+
+Vote for pictures, choose the best ones.
+
+Use case
+--------
+
+You and your friends were on a trip and took few thousands of pictures. You'd
+like to choose the best ones to show them to people who missed the trip.
+Choosing them manually might be pretty time consuming. Here comes Picvote.
+It allows you to browse your pictures and easily rate them in binary scale (like
+it or not).
+
+Usage
+-----
+
+We'll need:
+
+  * Ruby
+  * Bundler and gems listed in `Gemfile`
+  * A DataMapper adapter for your favourite DB (e.g. dm-sqlite-adapter)
+
+Check out the repository and follow these steps:
+
+    git submodule init && git submodule update
+    bundle install
+    mkdir pics && cp ~/pictures/*.jpg pics/
+    # Resizing your pictures to a smaller size
+    # might be a good idea.
+    for p in pics/*.jpg; do convert $p -resize 640 $p; done
+    DATABASE_URL=sqlite://`pwd`/db.sqlite rackup
+
+During the first launch it may take some time before the application starts. All
+pictures from `./pics/` have to be loaded to the database.
+
+To do
+-----
+
+  * Show voting results.
+  * Authentication.
+
+License
+-------
+
+See `LICENSE`.
