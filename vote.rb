@@ -22,6 +22,14 @@ class Pic
   def Pic.has_to_exist(name)
     throw 'No such pic' if Pic.first(:name => name).nil?
   end
+
+  def voted_by?(username)
+    if username.is_a? String
+      users.include? User.first(:login => username)
+    else
+      throw 'A string was expected'
+    end
+  end
 end
 
 class User
