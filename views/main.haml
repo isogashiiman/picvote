@@ -1,0 +1,6 @@
+%h1 Pictures
+%ul
+  - pics.each do |p|
+    %li
+      %a{:href => p.name}
+        = p.name

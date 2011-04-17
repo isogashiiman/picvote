@@ -50,7 +50,7 @@ def redirect_back
 end
 
 get '/' do
-  erb :main, :locals => { :pics => Pic.all(:order => :time) }
+  haml :main, :locals => { :pics => Pic.all(:order => :time) }
 end
 
 post '/login' do
@@ -70,7 +70,7 @@ get '/img/:name' do |name|
 end
 
 get /\/(.*\.jpg)$/i do |name|
-  erb :pic, :locals => { :pic => Pic.first(:name => name) }
+  haml :pic, :locals => { :pic => Pic.first(:name => name) }
 end
 
 get /\/(.*\.jpg)\/vote$/i do |name|
