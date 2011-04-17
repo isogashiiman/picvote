@@ -64,6 +64,7 @@ get '/logout' do
 end
 
 get '/img/:name' do |name|
+  Pic.has_to_exist name
   content_type 'image/jpeg'
   File.read("pics/#{name}")
 end
