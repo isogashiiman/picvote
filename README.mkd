@@ -19,7 +19,6 @@ We'll need:
 
   * Ruby
   * Bundler and gems listed in `Gemfile`
-  * A DataMapper adapter for your favourite DB (e.g. dm-sqlite-adapter)
 
 Check out the repository and follow these steps:
 
