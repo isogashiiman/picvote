@@ -96,7 +96,7 @@ def fill_db_with_pics
   pics.each_with_index do |name, index|
     STDERR.write "\rFilling db with pics... #{index + 1}/#{pics.count}"
     exif = EXIFR::JPEG.new name
-    name.sub! /pics\//, ''
+    name.sub! /^pics\//, ''
     Pic.create!(:name => name, :time => exif.date_time)
   end
   STDERR.puts " OK"
