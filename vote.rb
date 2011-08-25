@@ -93,9 +93,8 @@ end
 def fill_db_with_pics
   require 'exifr'
   pics = Dir.glob('pics/*.{jpg,JPG}')
-  n = 0
-  pics.each do |name|
-    STDERR.write "\rFilling db with pics... #{n += 1}/#{pics.count}"
+  pics.each_with_index do |name, index|
+    STDERR.write "\rFilling db with pics... #{index + 1}/#{pics.count}"
     exif = EXIFR::JPEG.new name
     name.sub! /pics\//, ''
     Pic.create!(:name => name, :time => exif.date_time)
