@@ -1,28 +1,28 @@
-%img{:class => :pic, :src => "/img/#{pic.name}", :alt => pic.name}
+%img{:class => :pic, :src => "/img/#{pic.url_name}", :alt => pic.name}
 #details
   %p= pic.name
   %p= pic.time.strftime '%d.%m.%y'
   %p= pic.time.strftime '%H:%M:%S %Z'
   %p
     - if pic.previous
-      %a{:href => pic.previous.name}
+      %a{:href => pic.previous.url_name}
         &laquo;&laquo;
     - else
       &laquo;&laquo;
     %a{:href => :/}
       All pictures
     - if pic.next
-      %a{:href => pic.next.name}
+      %a{:href => pic.next.url_name}
         &raquo;&raquo;
     - else
       &raquo;&raquo;
   %p
-    %a{:href => "/#{pic.name}/vote"}
+    %a{:href => "/#{pic.url_name}/vote"}
       Like it
   %p
     - if pic.users.any?
       People who like it are:
       = pic.users.map { |u| u.login } .join ', '
     - if session[:username] and pic.voted_by? session[:username]
-      %a{:href => "/#{pic.name}/unvote"}
+      %a{:href => "/#{pic.url_name}/unvote"}
         Unlike it

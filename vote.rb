@@ -2,6 +2,7 @@ require 'sinatra'
 require 'haml'
 require 'dm-core'
 require 'dm-migrations'
+require 'cgi'
 
 class Pic
   include DataMapper::Resource
@@ -31,6 +32,10 @@ class Pic
       throw 'A string was expected'
     end
   end
+
+  def url_name
+    CGI.escape name
+  end
 end
 
 class User
@@ -44,6 +49,12 @@ class Vote
   include DataMapper::Resource
   belongs_to :pic, :key => true
   belongs_to :user, :key => true
+end
+
+class String
+  def decode
+    CGI.unescape self
+  end
 end
 
 def redirect_back
@@ -64,14 +75,14 @@ get '/logout' do
   redirect_back
 end
 
-get '/img/:name' do |name|
-  Pic.has_to_exist name
+get /^\/img\/(.*\.jpg)$/i do |name|
+  Pic.has_to_exist name.decode
   content_type 'image/jpeg'
-  File.read("pics/#{name}")
+  File.read "pics/#{name.decode}"
 end
 
 get /\/(.*\.jpg)$/i do |name|
-  haml :pic, :locals => { :pic => Pic.first(:name => name) }
+  haml :pic, :locals => { :pic => Pic.first(:name => name.decode) }
 end
 
 get /\/(.*\.jpg)\/vote$/i do |name|
@@ -92,7 +103,7 @@ end
 
 def fill_db_with_pics
   require 'exifr'
-  pics = Dir.glob('pics/*.{jpg,JPG}')
+  pics = Dir.glob 'pics/**/*.{jpg,JPG}'
   pics.each_with_index do |name, index|
     STDERR.write "\rFilling db with pics... #{index + 1}/#{pics.count}"
     exif = EXIFR::JPEG.new name
