@@ -23,7 +23,6 @@ We'll need:
 
 Check out the repository and follow these steps:
 
-    git submodule init && git submodule update
     bundle install
     mkdir pics && cp ~/pictures/*.jpg pics/
     # Resizing your pictures to a smaller size

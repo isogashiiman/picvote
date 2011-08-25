@@ -1,4 +1,3 @@
-here = File.expand_path(File.dirname __FILE__)
-$:.concat [here, here + '/exifr/lib']
+$: << File.expand_path(File.dirname __FILE__)
 require 'vote'
 run Sinatra::Application
