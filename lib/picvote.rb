@@ -44,13 +44,13 @@ get /\/(.*\.jpg)$/i do |name|
 end
 
 get /\/(.*\.jpg)\/vote$/i do |name|
-  pic = Pic.first(:name => name) or return 'No suck picture.'
+  pic = Pic.first(:name => name) or return 'No such picture.'
   Vote.first_or_create :user => current_user, :pic => pic
   redirect "/#{pic.next.name}"
 end
 
 get /\/(.*\.jpg)\/unvote$/i do |name|
-  pic = Pic.first(:name => name) or return 'No suck picture.'
+  pic = Pic.first(:name => name) or return 'No such picture.'
   Vote.first(:user => current_user, :pic => pic).destroy!
   redirect "/#{pic.next.name}"
 end
