@@ -37,8 +37,9 @@ end
 class User
   include DataMapper::Resource
   property :id,  Serial
-  property :login, String, :length => 20, :unique_index => true,
+  property :uid, String, :length => 40, :unique_index => true,
     :required => true
+  property :name, String, :length => 40, :required => true
 end
 
 class Vote

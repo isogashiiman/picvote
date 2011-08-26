@@ -22,7 +22,7 @@
   %p
     - if pic.users.any?
       People who like it are:
-      = pic.users.map { |u| u.login } .join ', '
-    - if session[:username] and pic.voted_by? session[:username]
+      = pic.users.map { |u| u.name } .join ', '
+    - if pic.users.include? current_user
       %a{:href => "/#{pic.url_name}/unvote"}
         Unlike it

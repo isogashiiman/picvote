@@ -5,23 +5,24 @@ require 'dm-migrations'
 require 'dm-core'
 require 'database'
 require 'helpers'
+require 'omniauth'
 
-def redirect_back
-  redirect request.env['HTTP_REFERER']
+helpers do
+  def current_user
+    @current_user ||= User.first :uid => session[:uid]
+  end
+
+  def trying_to_authenticate?
+    request.path == '/' or request.path.include? '/auth/google'
+  end
+end
+
+before do
+  redirect '/' unless trying_to_authenticate? or current_user
 end
 
 get '/' do
   haml :main, :locals => { :pics => Pic.all(:order => :time) }
-end
-
-post '/login' do
-  session[:username] = params[:username]
-  redirect_back
-end
-
-get '/logout' do
-  session.delete :username
-  redirect_back
 end
 
 get /^\/img\/(.*\.jpg)$/i do |name|
@@ -35,22 +36,33 @@ get /\/(.*\.jpg)$/i do |name|
 end
 
 get /\/(.*\.jpg)\/vote$/i do |name|
-  return 'Please introduce yourself before voting.' unless session[:username]
   pic = Pic.first(:name => name) or return 'No suck picture.'
-  user = User.first_or_create(:login => session[:username])
-  Vote.first_or_create(:user => user, :pic => pic)
+  Vote.first_or_create :user => current_user, :pic => pic
   redirect "/#{pic.next.name}"
 end
 
 get /\/(.*\.jpg)\/unvote$/i do |name|
-  return 'Please introduce yourself before voting.' unless session[:username]
   pic = Pic.first(:name => name) or return 'No suck picture.'
-  user = User.first_or_create(:login => session[:username])
-  Vote.first(:user => user, :pic => pic).destroy!
+  Vote.first(:user => current_user, :pic => pic).destroy!
   redirect "/#{pic.next.name}"
 end
 
+get '/auth/google/callback' do
+  auth = request.env['omniauth.auth']
+  uid = auth['uid']
+  raise 'Login failed' unless User.first_or_create :uid => uid,
+    :name => auth['user_info']['name'] || uid
+  session[:uid] = uid
+  redirect '/'
+end
+
+get '/sign_out' do
+  session.delete :uid
+  redirect '/'
+end
+
 configure do
+  use OmniAuth::Strategies::Google, 'anonymous', 'anonymous'
   enable :sessions
   %w(views public).each { |dir| set dir, File.dirname(__FILE__) + '/../' + dir }
   Database.setup

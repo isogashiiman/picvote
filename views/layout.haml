@@ -6,14 +6,16 @@
     %link{:rel => :stylesheet, :type => 'text/css', :href => 'style.css'}
   %body
     #who
-      - if session[:username].nil?
-        %form{:action => '/login', :method => :POST}
-          What's your name?
-          %input{:name => :username, :type => :text}
-          %input{:type => :submit, :value => :Hi}
-      - else
+      - if current_user
         Hi,
-        %strong= session[:username] + '.'
-        %a{:href => '/logout'}
-          Log out
-    #content= yield
+        %strong= current_user.name + '.'
+        %a{:href => '/sign_out'}
+          Sign out
+      - else
+        %a{:href => '/auth/google'}
+          Sign in using Google
+    #content
+      - if current_user
+        = yield
+      - else
+        %p Please sign in using the link above.
