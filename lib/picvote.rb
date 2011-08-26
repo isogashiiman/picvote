@@ -15,9 +15,17 @@ helpers do
   def trying_to_authenticate?
     request.path == '/' or request.path.include? '/auth/google'
   end
+
+  def authorise(uid)
+    if not settings.auth_list.empty? and not settings.auth_list.include? uid
+      session.delete :uid
+      halt 401, "You're not authorised. Sorry."
+    end
+  end
 end
 
 before do
+  authorise current_user.uid if current_user
   redirect '/' unless trying_to_authenticate? or current_user
 end
 
@@ -50,6 +58,7 @@ end
 get '/auth/google/callback' do
   auth = request.env['omniauth.auth']
   uid = auth['uid']
+  authorise uid
   raise 'Login failed' unless User.first_or_create :uid => uid,
     :name => auth['user_info']['name'] || uid
   session[:uid] = uid
@@ -66,4 +75,11 @@ configure do
   enable :sessions
   %w(views public).each { |dir| set dir, File.dirname(__FILE__) + '/../' + dir }
   Database.setup
+  begin
+    File.open File.dirname(__FILE__) + '/../config/authorised.txt', 'r' do |f|
+      set :auth_list, f.readlines.map { |line| line.chomp }
+    end
+  rescue Errno::ENOENT
+    set :auth_list, []
+  end
 end

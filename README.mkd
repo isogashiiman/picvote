@@ -32,6 +32,17 @@ Check out the repository and follow these steps:
 During the first launch it may take some time before the application starts. All
 pictures from `./pics/` have to be loaded to the database.
 
+Authentication and authorisation
+--------------------------------
+
+Google OAuth API is used for authentication. Only signed in users are allowed to
+interact with the application. You can limit the list of authorised users by
+creating a `config/authorised.txt` and populating it with their GMail addresses,
+one per line. If `config/authorised.txt` doesn't exist or is empty everyone will
+be able to sign in and use the application.
+
+Changes in `config/authorised.txt` take effect after restarting the application.
+
 To do
 -----
 
