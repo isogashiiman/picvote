@@ -4,14 +4,14 @@
   %p= pic.time.strftime '%H:%M:%S %Z'
   %p
     - if pic.previous
-      %a{:href => pic.previous.url_name}
+      %a#prev{:href => pic.previous.url_name}
         &laquo;&laquo;
     - else
       &laquo;&laquo;
     %a{:href => :/}
       All pictures
     - if pic.next
-      %a{:href => pic.next.url_name}
+      %a#next{:href => pic.next.url_name}
         &raquo;&raquo;
     - else
       &raquo;&raquo;
@@ -25,4 +25,6 @@
     - if pic.users.include? current_user
       %a{:href => "/#{pic.url_name}/unvote"}
         Unlike it
+  %p You can navigate using your left and right arrow keys.
 %img#pic{:src => "/img/#{pic.url_name}", :alt => pic.name}
+%script{:src => '/pic.js'}
