@@ -26,7 +26,7 @@ Check out the repository and follow these steps:
     mkdir pics && cp ~/pictures/*.jpg pics/
     # Resizing your pictures to a smaller size
     # might be a good idea.
-    for p in pics/*.jpg; do convert $p -resize 640 $p; done
+    for p in pics/*.jpg; do convert $p -resize 1024 $p; done
     DATABASE_URL=sqlite://`pwd`/db.sqlite rackup
 
 During the first launch it may take some time before the application starts. All
