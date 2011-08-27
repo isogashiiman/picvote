@@ -1,6 +1,8 @@
 %h1 Pictures
-%ul
-  - pics.each do |p|
-    %li
-      %a{:href => p.url_name}
-        = p.name
+- pics_by_days.each do |pics|
+  %h2= pics.first.time.strftime '%d.%m.%y'
+  %ul
+    - pics.each do |p|
+      %li
+        %a{:href => p.url_name}
+          = p.name

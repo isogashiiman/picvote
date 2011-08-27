@@ -30,7 +30,14 @@ before do
 end
 
 get '/' do
-  haml :main, :locals => { :pics => Pic.all(:order => :time) }
+  pics = Pic.all(:order => :time)
+  pics_by_days = pics.reduce [[[]], pics.first] do |acc, curr|
+    coll, prev = *acc
+    coll << [] unless curr.time.same_day_as prev.time
+    coll.last << curr
+    [coll, curr]
+  end .first
+  haml :main, :locals => { :pics_by_days => pics_by_days }
 end
 
 get /^\/img\/(.*\.jpg)$/i do |name|
