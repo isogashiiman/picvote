@@ -1,4 +1,3 @@
-%img{:class => :pic, :src => "/img/#{pic.url_name}", :alt => pic.name}
 #details
   %p= pic.name
   %p= pic.time.strftime '%d.%m.%y'
@@ -26,3 +25,4 @@
     - if pic.users.include? current_user
       %a{:href => "/#{pic.url_name}/unvote"}
         Unlike it
+%img#pic{:src => "/img/#{pic.url_name}", :alt => pic.name}
