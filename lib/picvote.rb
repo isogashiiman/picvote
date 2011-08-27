@@ -6,6 +6,7 @@ require 'dm-core'
 require 'database'
 require 'helpers'
 require 'omniauth'
+require 'digest/sha2'
 
 helpers do
   def current_user
@@ -42,8 +43,11 @@ end
 
 get /^\/img\/(.*\.jpg)$/i do |name|
   Pic.has_to_exist name.decode
+  data = File.read "pics/#{name.decode}"
   content_type 'image/jpeg'
-  File.read "pics/#{name.decode}"
+  cache_control :private
+  etag Digest::SHA256.hexdigest data
+  data
 end
 
 get /\/(.*\.jpg)$/i do |name|
