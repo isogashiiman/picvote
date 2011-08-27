@@ -27,7 +27,7 @@ Check out the repository and follow these steps:
     # Resizing your pictures to a smaller size
     # might be a good idea.
     for p in pics/*.jpg; do convert $p -resize 1024 $p; done
-    DATABASE_URL=sqlite://`pwd`/db.sqlite rackup
+    DATABASE_URL=sqlite://`pwd`/db.sqlite bundle exec rackup
 
 During the first launch it may take some time before the application starts. All
 pictures from `./pics/` have to be loaded to the database.
