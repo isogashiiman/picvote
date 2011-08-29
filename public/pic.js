@@ -1,9 +1,10 @@
 $(document).keydown(function(e){
-  if (e.keyCode == 37 && $("a#prev").length > 0) {
-    document.location = $("a#prev").attr("href");
-    return false;
-  } else if (e.keyCode == 39 && $("a#next").length > 0) {
-    document.location = $("a#next").attr("href");
-    return false;
+  var bindings = [[37, "prev"], [39, "next"], [38, "vote"], [40, "unvote"]];
+  for (var i in bindings) {
+    var id = "a#" + bindings[i][1];
+    if (e.keyCode == bindings[i][0] && $(id).length > 0) {
+      document.location = $(id).attr("href");
+      return false;
+    }
   }
 });

@@ -16,15 +16,16 @@
     - else
       &raquo;&raquo;
   %p
-    %a{:href => "/#{pic.url_name}/vote"}
+    %a#vote{:href => "/#{pic.url_name}/vote"}
       Like it
   %p
     - if pic.users.any?
       People who like it are:
       = pic.users.map { |u| u.name } .join ', '
     - if pic.users.include? current_user
-      %a{:href => "/#{pic.url_name}/unvote"}
+      %a#unvote{:href => "/#{pic.url_name}/unvote"}
         Unlike it
   %p You can navigate using your left and right arrow keys.
+  %p Liking and unliking can be accomplished using up and down arrows.
 %img#pic{:src => "/img/#{pic.url_name}", :alt => pic.name}
 %script{:src => '/pic.js'}
