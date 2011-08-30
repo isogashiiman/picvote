@@ -31,3 +31,15 @@ div#footer {
   padding: 20px 0 20px;
   border-top: 1px solid;
 }
+
+div#liked {
+  padding: 10px;
+  border: 1px solid green;
+  background: #beb;
+}
+
+div#unliked {
+  padding: 10px;
+  border: 1px solid red;
+  background: #ebb;
+}

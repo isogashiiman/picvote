@@ -23,11 +23,25 @@ helpers do
       halt 401, "You're not authorised. Sorry."
     end
   end
+
+  def just_liked?
+    session[:liked]
+  end
+
+  def just_unliked?
+    session[:unliked]
+  end
 end
 
 before do
   authorise current_user.uid if current_user
   redirect '/' unless trying_to_authenticate? or current_user
+end
+
+after do
+  [:liked, :unliked].each do |key|
+    session.delete key unless session[key].to_i == request.hash
+  end
 end
 
 get '/' do
@@ -57,12 +71,14 @@ end
 get /\/(.*\.jpg)\/vote$/i do |name|
   pic = Pic.first(:name => name) or return 'No such picture.'
   Vote.first_or_create :user => current_user, :pic => pic
+  session[:liked] = request.hash
   redirect "/#{pic.next.url_name}"
 end
 
 get /\/(.*\.jpg)\/unvote$/i do |name|
   pic = Pic.first(:name => name) or return 'No such picture.'
   Vote.first(:user => current_user, :pic => pic).destroy!
+  session[:unliked] = request.hash
   redirect "/#{pic.next.url_name}"
 end
 

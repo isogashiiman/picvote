@@ -27,5 +27,9 @@
         Unlike it
   %p You can navigate using your left and right arrow keys.
   %p Liking and unliking can be accomplished using up and down arrows.
+  - if just_liked?
+    #liked Like added.
+  - elsif just_unliked?
+    #unliked Like removed.
 %img#pic{:src => "/img/#{pic.url_name}", :alt => pic.name}
 %script{:src => '/pic.js'}
