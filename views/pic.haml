@@ -43,7 +43,7 @@
         &mdash;
         %span.author= escape_html c.user.name
         wrote
-        %abbr.timeago{:title => c.time.iso8601}= c.time
+        %abbr.timeago{:title => c.time.strftime}= c.time
 %form#new_comment{:method => :post, :action => "/#{pic.url_name}/comment"}
   %textarea{:name => :text}
   %p
