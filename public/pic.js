@@ -10,3 +10,4 @@ $(document).keydown(function(e){
 });
 $('#liked').delay(1000).fadeOut();
 $('#unliked').delay(1000).fadeOut();
+$(document).ready(function() { $("abbr.timeago").timeago(); });
