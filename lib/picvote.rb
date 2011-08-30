@@ -68,6 +68,14 @@ get /\/(.*\.jpg)$/i do |name|
   haml :pic, :locals => { :pic => Pic.first(:name => name.decode) }
 end
 
+post /\/(.*\.jpg)\/comment$/i do |name|
+  halt if params[:text].empty?
+  pic = Pic.first(:name => name)
+  Comment.create! :text => params[:text], :user => current_user, :pic => pic,
+    :time => Time.now
+  redirect "/#{pic.url_name}"
+end
+
 get /\/(.*\.jpg)\/vote$/i do |name|
   pic = Pic.first(:name => name) or return 'No such picture.'
   Vote.first_or_create :user => current_user, :pic => pic

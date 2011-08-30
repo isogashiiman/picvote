@@ -8,6 +8,7 @@ class Pic
   property :time, DateTime, :required => true, :index => true
   has n, :votes
   has n, :users, :through => :votes
+  has n, :comments
 
   def previous
     Pic.first :order => :time.desc, :time.lt => time
@@ -46,6 +47,15 @@ class Vote
   include DataMapper::Resource
   belongs_to :pic, :key => true
   belongs_to :user, :key => true
+end
+
+class Comment
+  include DataMapper::Resource
+  property :id,  Serial
+  property :text, Text, :required => true
+  property :time, DateTime, :required => true, :index => true
+  belongs_to :user
+  belongs_to :pic
 end
 
 module Database

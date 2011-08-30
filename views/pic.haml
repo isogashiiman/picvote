@@ -31,5 +31,22 @@
     #liked Like added.
   - elsif just_unliked?
     #unliked Like removed.
+  - if pic.comments.any?
+    %p
+      %a{:href => '#comments'} This picture has some comments.
 %img#pic{:src => "/img/#{pic.url_name}", :alt => pic.name}
+- if pic.comments.any?
+  %ul
+    - pic.comments.each do |c|
+      %li.comment
+        %span.text= escape_html c.text
+        &mdash;
+        %span.author= escape_html c.user.name
+        wrote at
+        %span.time= escape_html c.time
+%form#new_comment{:method => :post, :action => "/#{pic.url_name}/comment"}
+  %textarea{:name => :text}
+  %p
+    %input{:type => :submit, :value => 'Add a comment'}
+    %small You won't have a chance to edit or delete it later.
 %script{:src => '/pic.js'}
