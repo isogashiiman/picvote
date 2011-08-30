@@ -52,7 +52,7 @@ end
 class Comment
   include DataMapper::Resource
   property :id,  Serial
-  property :text, Text, :required => true
+  property :text, Text, :length => 500, :required => true
   property :time, DateTime, :required => true, :index => true
   belongs_to :user
   belongs_to :pic
