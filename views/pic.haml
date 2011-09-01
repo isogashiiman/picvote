@@ -36,7 +36,7 @@
       %a{:href => '#comments'} This picture has some comments.
 %img#pic{:src => "/img/#{pic.url_name}", :alt => pic.name}
 - if pic.comments.any?
-  %ul
+  %ul#comments
     - pic.comments.each do |c|
       %li.comment
         %span.text= escape_html c.text
