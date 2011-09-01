@@ -75,7 +75,7 @@ module Database
       STDERR.write "\rFilling db with pics... #{index + 1}/#{pics.count}"
       exif = EXIFR::JPEG.new name
       name.sub! /^pics\//, ''
-      Pic.create!(:name => name, :time => exif.date_time)
+      Pic.create!(:name => name, :time => exif.date_time_original)
     end
     STDERR.puts " OK"
   end
