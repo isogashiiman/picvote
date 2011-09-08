@@ -41,6 +41,8 @@ class User
   property :uid, String, :length => 40, :unique_index => true,
     :required => true
   property :name, String, :length => 40, :required => true
+  has n, :votes
+  has n, :users, :through => :votes
 end
 
 class Vote

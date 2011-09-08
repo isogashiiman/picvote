@@ -7,4 +7,5 @@ gem 'haml'
 gem 'sinatra'
 gem 'exifr'
 gem 'omniauth'
+gem 'multi_json'
 gem 'json_pure', :platform => :ruby_18

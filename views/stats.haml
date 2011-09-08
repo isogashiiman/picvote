@@ -1,0 +1,11 @@
+%h1 Everyone ♥ statistics
+.chart#per_user
+.chart#votes_count
+.clear
+%script{:src => '/raphael-min.js'}
+%script{:src => '/elycharts.min.js'}
+%script{:src => '/stats.js'}
+%script
+  $(function() { plot(
+  = MultiJson.encode stats
+  ); });

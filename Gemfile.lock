@@ -93,5 +93,6 @@ DEPENDENCIES
   exifr
   haml
   json_pure
+  multi_json
   omniauth
   sinatra

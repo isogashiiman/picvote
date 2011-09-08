@@ -31,6 +31,21 @@ helpers do
   def just_unliked?
     session[:unliked]
   end
+
+  def voting_stats
+    data = {}
+    data[:per_user] = User.all.reduce({}) do |hash, user|
+      hash.merge({user.name => user.votes.count})
+    end
+    data[:votes_count] = Pic.all.reduce({}) do |hash, pic|
+      if (count = pic.votes.count) > 0
+        hash[count] ||= 0
+        hash[count] += 1
+      end
+      hash
+    end
+    data
+  end
 end
 
 before do
@@ -103,6 +118,10 @@ end
 get '/sign_out' do
   session.delete :uid
   redirect '/'
+end
+
+get '/stats' do
+  haml :stats, :locals => { :stats => voting_stats }
 end
 
 configure do
