@@ -33,17 +33,16 @@ helpers do
   end
 
   def voting_stats
+    def rows_to_hash(rows) Hash[*rows.map { |row| _ = *row } .flatten] end
     data = {}
-    data[:per_user] = User.all.reduce({}) do |hash, user|
-      hash.merge({user.name => user.votes.count})
-    end
-    data[:votes_count] = Pic.all.reduce({}) do |hash, pic|
-      if (count = pic.votes.count) > 0
-        hash[count] ||= 0
-        hash[count] += 1
-      end
-      hash
-    end
+    data[:per_user] = rows_to_hash User.repository.adapter.select(
+      'select u.name, count(v.user_id) as number from votes v
+      join users u on u.id = v.user_id group by u.id')
+    data[:votes_count] = rows_to_hash User.repository.adapter.select(
+      'select number, count(pic_id) from (
+      select count(v.pic_id) as number, p.id as pic_id from votes v
+      join pics p on p.id = v.pic_id group by p.id
+      ) group by number')
     data
   end
 end
