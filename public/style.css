@@ -61,3 +61,11 @@ textarea {
 .clear {
   clear: both;
 }
+
+.slideshow .pic {
+  display: none;
+}
+
+.slideshow .pic img {
+  height: 90%;
+}

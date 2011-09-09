@@ -1,0 +1,6 @@
+.slideshow
+  - pics.each_with_index do |pic, index|
+    .pic{:id => "pic_#{index}"}
+      %img{:src => "/img/#{pic.url_name}", :alt => pic.name}
+      %div= pic.name
+%script{:src => '/slideshow.js'}

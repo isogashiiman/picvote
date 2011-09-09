@@ -33,6 +33,15 @@ class Pic
   def url_name
     CGI.escape name
   end
+
+  def Pic.with_votes_count(num)
+    # This can be achieved in a more efficient way.
+    repository.adapter.select('select p.id from votes v
+    join pics p on p.id = v.pic_id group by p.id having count(v.pic_id) >= ' +
+    num.to_i.to_s).map { |id| Pic.first :id => id } .sort do |x, y|
+      x.time <=> y.time
+    end
+  end
 end
 
 class User

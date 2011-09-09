@@ -128,6 +128,10 @@ get '/stats' do
   haml :stats, :locals => { :stats => voting_stats }
 end
 
+get '/slideshow/:votes' do |votes|
+  haml :slideshow, :locals => { :pics => Pic.with_votes_count(votes.to_i) }
+end
+
 configure do
   use OmniAuth::Strategies::Google, 'anonymous', 'anonymous'
   enable :sessions
