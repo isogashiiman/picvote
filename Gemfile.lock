@@ -2,6 +2,7 @@ GEM
   remote: http://rubygems.org/
   specs:
     addressable (2.2.6)
+    bouncy-castle-java (1.5.0146.1)
     data_objects (0.10.6)
       addressable (~> 2.1)
     dm-core (1.1.0)
@@ -14,20 +15,31 @@ GEM
     dm-sqlite-adapter (1.1.0)
       dm-do-adapter (~> 1.1.0)
       do_sqlite3 (~> 0.10.2)
+    do_jdbc (0.10.6-java)
+      data_objects (= 0.10.6)
     do_sqlite3 (0.10.6)
       data_objects (= 0.10.6)
+    do_sqlite3 (0.10.6-java)
+      data_objects (= 0.10.6)
+      do_jdbc (= 0.10.6)
+      jdbc-sqlite3 (>= 3.5.8)
     exifr (1.0.6)
     faraday (0.6.1)
       addressable (~> 2.2.4)
       multipart-post (~> 1.1.0)
       rack (>= 1.1.0, < 2)
     haml (3.1.2)
+    jdbc-sqlite3 (3.7.2)
+    jruby-openssl (0.7.4)
+      bouncy-castle-java
     json_pure (1.5.3)
     mime-types (1.16)
     multi_json (0.0.5)
     multipart-post (1.1.3)
     net-ldap (0.1.1)
     nokogiri (1.4.7)
+    nokogiri (1.4.7-java)
+      weakling (>= 0.0.3)
     oa-basic (0.2.3)
       multi_json (~> 0.0.2)
       nokogiri (~> 1.4.2)
@@ -82,8 +94,10 @@ GEM
       rack (~> 1.1)
       tilt (>= 1.2.2, < 2.0)
     tilt (1.3.3)
+    weakling (0.0.4-java)
 
 PLATFORMS
+  java
   ruby
 
 DEPENDENCIES
@@ -92,6 +106,7 @@ DEPENDENCIES
   dm-sqlite-adapter
   exifr
   haml
+  jruby-openssl
   json_pure
   multi_json
   omniauth
