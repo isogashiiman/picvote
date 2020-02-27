@@ -86,7 +86,7 @@ GEM
       ruby-openid (>= 2.1.8)
     rest-client (1.6.7)
       mime-types (>= 1.16)
-    ruby-openid (2.1.8)
+    ruby-openid (2.9.2)
     ruby-openid-apps-discovery (1.2.0)
       ruby-openid (>= 2.1.7)
     rubyntlm (0.1.1)
